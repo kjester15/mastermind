@@ -1,6 +1,6 @@
 class Board
     attr_accessor 
-    attr_reader :round, :guess, :answer, :clue
+    attr_reader :round, :guess, :answer, :clue, :win
 
     def initialize
         @symbols = ["1", "2", "3", "4", "5", "6"]
@@ -13,7 +13,7 @@ class Board
 
     def get_guess
         for x in 0..3 do
-            puts "Guess #{x+1}"
+            puts "Guess: #{x+1}"
             @guess[x] = gets.chomp
             until @symbols.include?(@guess[x])
                 puts "Please select from the following list of choices: [1, 2, 3, 4, 5, 6]"
@@ -44,21 +44,28 @@ class Board
         # checks if clue array only contains "@"
         if @clue.include?("@")
             if @clue.uniq.count <= 1
-                puts "you won"
+                puts "You win!"
+                @win = true
             end
         end
     end
 end
 
 while
+    # create new board
     current_board = Board.new
     p current_board.answer
-    user_guess = current_board.get_guess
-    puts "Your guess is: #{user_guess}"
-    clue = current_board.create_clue
-    puts "Your clue is: #{clue}"
-    current_board.check_for_win
     
+    # loop until user runs out of guesses or user guesses the correct answer
+    while current_board.round < 11 && (not current_board.win)
+        puts "Round: #{current_board.round}"
+        user_guess = current_board.get_guess
+        puts "Your guess is: #{user_guess}"
+        clue = current_board.create_clue
+        puts "Your clue is: #{clue}"
+        current_board.check_for_win
+    end
+
     # ask to play another game
     answer = ""
     until answer == "yes" || answer == "no"
