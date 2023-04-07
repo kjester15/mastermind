@@ -57,7 +57,7 @@ while
     p current_board.answer
     
     # loop until user runs out of guesses or user guesses the correct answer
-    while current_board.round < 11 && (not current_board.win)
+    while current_board.round < 13 && (not current_board.win)
         puts "Round: #{current_board.round}"
         user_guess = current_board.get_guess
         puts "Your guess is: #{user_guess}"
