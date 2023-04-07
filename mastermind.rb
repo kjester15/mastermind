@@ -9,7 +9,7 @@ class Board
 
     def get_guess
         for x in 0..3 do
-            puts "x = #{x}"
+            puts "Guess #{x+1}"
             @guess[x] = gets.chomp
             until @symbols.include?(@guess[x])
                 puts "Please select from the following list of choices: [1, 2, 3, 4, 5, 6]"
