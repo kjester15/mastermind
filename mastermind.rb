@@ -60,6 +60,7 @@ class Solution
     def initialize
         @option = []
     end
+
 end
 
 while
