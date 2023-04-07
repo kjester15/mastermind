@@ -51,6 +51,17 @@ class Board
     end
 end
 
+class Computer
+    def initialize
+    end
+end
+
+class Solution
+    def initialize
+        @option = []
+    end
+end
+
 while
     # create new board
     current_board = Board.new
