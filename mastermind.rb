@@ -66,6 +66,25 @@ end
 while
     # create new board
     current_board = Board.new
+
+    # ask user if they want to create secret code or guess
+    until game_mode == "A" || game_mode == "B"
+        puts "Would you like to create the secret code for the computer to guess, or guess 
+        the computer's secret code? Type 'A' for create or 'B' for guess"
+        game_mode = gets.chomp.upcase
+        if game_mode == "A" || game_mode == "B"
+            break
+        else
+            puts "Please enter a valid option: 'A' to create the secret code, or 'B' 
+            to guess the secret code"
+        end
+    end
+
+    if game_mode == "A"
+        # create code mode
+    elsif game_mode == "B"
+        # guess code mode
+    end
     
     # loop until user runs out of guesses or user guesses the correct answer
     while current_board.round < 13 && (not current_board.win)
