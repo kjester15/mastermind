@@ -13,8 +13,6 @@ Create classes
     - creates all possible solutions
     - makes guesses
     - analyzes solutions based on clues
-3. solution
-    - holds all possible solutions remaining
 
 
 Algo tip:

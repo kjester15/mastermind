@@ -12,12 +12,12 @@ class Board
   end
 
   def guess_symbol
-    for x in 0..3 do
-      puts "Guess: #{x + 1}"
-      @guess[x] = gets.chomp
-      until @symbols.include?(@guess[x])
+    (0..3).each do |i|
+      puts "Guess: #{i + 1}"
+      @guess[i] = gets.chomp
+      until @symbols.include?(@guess[i])
         puts 'Please select from the following list of choices: [1, 2, 3, 4, 5, 6]'
-        @guess[x] = gets.chomp
+        @guess[i] = gets.chomp
       end
     end
     @round += 1
@@ -28,13 +28,13 @@ class Board
     # x if not in answer at all
     # o if in answer but not right spot
     # @ if correct answer
-    for x in 0..3 do
-      if @guess[x] == @answer[x]
-        @clue[x] = '@'
-      elsif @answer.include?(@guess[x])
-        @clue[x] = 'o'
+    (0..3).each do |i|
+      if @guess[i] == @answer[i]
+        @clue[i] = '@'
+      elsif @answer.include?(@guess[i])
+        @clue[i] = 'o'
       else
-        @clue[x] = 'x'
+        @clue[i] = 'x'
       end
     end
     @clue
@@ -50,13 +50,20 @@ class Board
   end
 end
 
+# the Computer class represents the ai computer that guesses the users code in create mode
 class Computer
-  def initialize; end
-end
-
-class Solution
   def initialize
-    @option = []
+    @solutions = []
+  end
+
+  def populate_solutions
+    # 1111, 1112, 1113...6664, 6665, 6666
+    a = 1
+    b = 2
+    c = 3
+    d = 4
+    e = 5
+    f = 6
   end
 end
 
