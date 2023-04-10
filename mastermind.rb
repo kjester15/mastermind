@@ -66,7 +66,6 @@ end
 while
     # create new board
     current_board = Board.new
-    p current_board.answer
     
     # loop until user runs out of guesses or user guesses the correct answer
     while current_board.round < 13 && (not current_board.win)
