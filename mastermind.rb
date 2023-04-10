@@ -96,7 +96,7 @@ Good luck!"
       end
     end
     # display lose text if user didn't win
-    if current_board.win == false then "Better luck next time! The correct answer was: #{current_board.answer}" end
+    if current_board.win == false then puts "Better luck next time! The correct answer was: #{current_board.answer}" end
 
     # ask to play another game
     answer = ''
