@@ -52,18 +52,26 @@ end
 
 # the Computer class represents the ai computer that guesses the users code in create mode
 class Computer
+  attr_reader :solutions
   def initialize
     @solutions = []
   end
 
   def populate_solutions
-    # 1111, 1112, 1113...6664, 6665, 6666
-    a = 1
-    b = 2
-    c = 3
-    d = 4
-    e = 5
-    f = 6
+    # creates all solutions from 1111 to 6666
+    (1..6).each do |a|
+      (1..6).each do |b|
+        (1..6).each do |c|
+          (1..6).each do |d|
+            letter_a = a.to_s
+            letter_b = b.to_s
+            letter_c = c.to_s
+            letter_d = d.to_s
+            @solutions << letter_a + letter_b + letter_c + letter_d
+          end
+        end
+      end
+    end
   end
 end
 
@@ -92,6 +100,9 @@ and an '@' indicates you've guessed the correct symbol in the correct spot. Your
 Good luck!"
       # error check - print answer (DELETE)
       p current_board.answer
+      new_computer = Computer.new
+      new_computer.populate_solutions
+      p new_computer.solutions
       # loop until user runs out of guesses or user guesses the correct answer
       while current_board.round < 13 && !current_board.win
         puts "Round: #{current_board.round}"
