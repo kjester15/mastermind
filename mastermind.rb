@@ -104,6 +104,10 @@ class Computer
     end
   end
 
+  def narrow_solutions
+    @solutions.select
+  end
+
   def guess_code
     @guess = ''
     4.times do
@@ -135,6 +139,7 @@ to guess the secret code"
     current_player.create_code
     while current_board.round < 13 && !current_board.win
       current_computer.guess_code
+      sleep 1
       current_board.round += 1
     end
   elsif game_mode == 'B' # guess code mode
