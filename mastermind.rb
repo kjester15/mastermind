@@ -121,11 +121,20 @@ class Computer
     end
   end
 
-  # def narrow_solutions
-  #   @solutions.select! do |code|
-  #     puts code[0]
-  #     puts code[1]
-  # end
+  def narrow_solutions(clue)
+    # x if not in answer at all
+    # o if in answer but not right spot
+    # @ if correct answer
+    @solutions.select! do
+      4.times do |i|
+        # if guess[x] is @ in clue[x] then eliminate any solutions that dont have that number in that spot
+        clue[i] == 'x' ? false : true
+
+        # if guess[x] is o in clue[x] then eliminate any solutions that dont contain that number
+        # if guess[x] is x in clue[x] then eliminate any solutions that contain that number
+      end
+    end
+  end
 
   def guess_code
     @guess = ''
@@ -151,21 +160,29 @@ to guess the secret code"
   end
 
   if game_mode == 'A' # create code mode
+    # create class instances
     current_board = Board.new
     current_computer = Computer.new
     current_player = Player.new
+    # run initial instance methods
     current_computer.populate_solutions
     secret_code = current_player.create_code
+
     puts "The code you created is #{secret_code}."
+
+    # begin game loop
     while current_board.round < 13 && !current_board.win
       puts "Round: #{current_board.round}"
       computer_guess = current_computer.guess_code
       puts "The computer's guess is #{computer_guess}."
       current_board.round += 1
-      sleep 2
-      # check if computer's guess is correct
       clue = current_board.create_computer_clue(computer_guess, secret_code)
       puts "The computer's clue is: #{clue}"
+      sleep 2
+
+      # check if computer's guess is correct
+      current_computer.narrow_solutions(clue)
+      puts current_computer.solutions.length
     end
   elsif game_mode == 'B' # guess code mode
     # create new board
