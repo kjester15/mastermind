@@ -57,11 +57,30 @@ class Player
   def initialize
     @code = ''
   end
+
+  def create_code
+    puts "What would you like the secret code to be? Please enter a 4 digit number, containing only numbers between \
+(inclusively) 1 and 6"
+    number = 0
+    4.times do |x|
+      until (1..6).include?(number)
+        print "Digit #{x + 1}: "
+        number = gets.chomp.to_i
+        break if (1..6).include?(number)
+
+        puts 'Please enter a valid number between 1 and 6'
+      end
+      @code += number.to_s
+      number = 0
+    end
+    puts "The code you created is #{@code}."
+  end
 end
 
 # the Computer class represents the ai computer that guesses the users code in create mode
 class Computer
   attr_reader :solutions
+
   def initialize
     @solutions = []
   end
@@ -99,7 +118,9 @@ to guess the secret code"
 
     if game_mode == 'A' # create code mode
       current_computer = Computer.new
+      current_player = Player.new
       current_computer.populate_solutions
+      current_player.create_code
     elsif game_mode == 'B' # guess code mode
       # create new board
       current_board = Board.new
