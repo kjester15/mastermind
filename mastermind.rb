@@ -41,6 +41,22 @@ class Board
     @clue
   end
 
+  def create_computer_clue(guess, code)
+    # x if not in answer at all
+    # o if in answer but not right spot
+    # @ if correct answer
+    4.times do |i|
+      if guess[i] == code[i]
+        @clue[i] = '@'
+      elsif code.include?(guess[i])
+        @clue[i] = 'o'
+      else
+        @clue[i] = 'x'
+      end
+    end
+    @clue
+  end
+
   def check_for_win
     # checks if clue array only contains "@"
     return unless @clue.include?('@')
@@ -49,6 +65,7 @@ class Board
     puts 'You win!'
     @win = true
   end
+
 end
 
 # the Player class represents the player who creates the code in create mode
@@ -74,7 +91,7 @@ class Player
       @code += number.to_s
       number = 0
     end
-    puts "The code you created is #{@code}."
+    @code
   end
 end
 
@@ -104,9 +121,11 @@ class Computer
     end
   end
 
-  def narrow_solutions
-    @solutions.select! { |code| }
-  end
+  # def narrow_solutions
+  #   @solutions.select! do |code|
+  #     puts code[0]
+  #     puts code[1]
+  # end
 
   def guess_code
     @guess = ''
@@ -114,7 +133,7 @@ class Computer
       number = rand(1..6).to_s
       @guess += number
     end
-    puts "Computer's guess is #{@guess}."
+    @guess
   end
 end
 
@@ -136,12 +155,17 @@ to guess the secret code"
     current_computer = Computer.new
     current_player = Player.new
     current_computer.populate_solutions
-    current_player.create_code
+    secret_code = current_player.create_code
+    puts "The code you created is #{secret_code}."
     while current_board.round < 13 && !current_board.win
       puts "Round: #{current_board.round}"
-      current_computer.guess_code
-      sleep 1
+      computer_guess = current_computer.guess_code
+      puts "The computer's guess is #{computer_guess}."
       current_board.round += 1
+      sleep 2
+      # check if computer's guess is correct
+      clue = current_board.create_computer_clue(computer_guess, secret_code)
+      puts "The computer's clue is: #{clue}"
     end
   elsif game_mode == 'B' # guess code mode
     # create new board
