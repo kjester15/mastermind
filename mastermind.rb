@@ -105,7 +105,7 @@ class Computer
   end
 
   def narrow_solutions
-    @solutions.select
+    @solutions.select! { |code| }
   end
 
   def guess_code
@@ -138,6 +138,7 @@ to guess the secret code"
     current_computer.populate_solutions
     current_player.create_code
     while current_board.round < 13 && !current_board.win
+      puts "Round: #{current_board.round}"
       current_computer.guess_code
       sleep 1
       current_board.round += 1
