@@ -50,6 +50,15 @@ class Board
   end
 end
 
+# the Player class represents the player who creates the code in create mode
+class Player
+  attr_reader :code
+
+  def initialize
+    @code = ''
+  end
+end
+
 # the Computer class represents the ai computer that guesses the users code in create mode
 class Computer
   attr_reader :solutions
