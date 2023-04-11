@@ -1,7 +1,7 @@
 # the Board class represents the game board while the user is in guess mode
 class Board
-  attr_reader :round, :guess, :answer, :clue, :win
-  attr_writer :round, :win
+  attr_accessor :round, :win
+  attr_reader :guess, :answer, :clue
 
   def initialize
     @symbols = %w[1 2 3 4 5 6] # use %w for arrays of strings
