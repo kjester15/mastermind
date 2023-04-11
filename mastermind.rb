@@ -12,7 +12,7 @@ class Board
   end
 
   def guess_symbol
-    (0..3).each do |i|
+    4.times do |i|
       puts "Guess: #{i + 1}"
       @guess[i] = gets.chomp
       until @symbols.include?(@guess[i])
@@ -28,7 +28,7 @@ class Board
     # x if not in answer at all
     # o if in answer but not right spot
     # @ if correct answer
-    (0..3).each do |i|
+    4.times do |i|
       if @guess[i] == @answer[i]
         @clue[i] = '@'
       elsif @answer.include?(@guess[i])
@@ -89,7 +89,8 @@ to guess the secret code"
     end
 
     if game_mode == 'A' # create code mode
-      # insert code
+      current_computer = Computer.new
+      current_computer.populate_solutions
     elsif game_mode == 'B' # guess code mode
       # create new board
       current_board = Board.new
@@ -100,9 +101,7 @@ and an '@' indicates you've guessed the correct symbol in the correct spot. Your
 Good luck!"
       # error check - print answer (DELETE)
       p current_board.answer
-      new_computer = Computer.new
-      new_computer.populate_solutions
-      p new_computer.solutions
+
       # loop until user runs out of guesses or user guesses the correct answer
       while current_board.round < 13 && !current_board.win
         puts "Round: #{current_board.round}"
