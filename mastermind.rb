@@ -97,7 +97,7 @@ end
 
 # the Computer class represents the ai computer that guesses the users code in create mode
 class Computer
-  attr_reader :solutions
+  attr_reader :solutions, :test
 
   def initialize
     @solutions = []
@@ -122,31 +122,26 @@ class Computer
   end
 
   def narrow_solutions(clue, guess)
-    # @solutions.select! do |elem|
-      4.times do |i|
-        if clue[i] == 'x'
-          number = guess[i]
-          yeet = number.class
-          puts yeet
-          # next if elem.include?(number)
+    @solutions.select! do |elem|
+      if clue.include?('x')
+        index = clue.find_index('x')
+        number = guess[index]
+        next if elem.include?(number)
 
-        end
-        true
-        # need to see where in clue has an x, then find the number it corresponds with in guess, then remove element that contains that number
       end
-    # end
+      true
+      # 4.times do |i|
+      #   if clue[i] == 'x'
+      #     number = guess[i]
+      #     next if elem.include?(number)
+
+      #   end
+      # end
+    end
   end
 
   def guess_code(round)
-    if round == 1
-      @guess = ''
-      4.times do
-        number = rand(1..6).to_s
-        @guess += number
-      end
-    else
-      @guess = @solutions[0]
-    end
+    @guess = round == 1 ? '1122' : @solutions[rand(0..@solutions.length)]
     @guess
   end
 end
