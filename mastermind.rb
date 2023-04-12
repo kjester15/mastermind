@@ -197,9 +197,6 @@ is not in the answer at all, an 'o' indicates your guess is in the answer but wa
 and an '@' indicates you've guessed the correct symbol in the correct spot. Your available options are: 1 2 3 4 5 & 6. \
 Good luck!"
 
-    # error check - print answer (DELETE)
-    p current_board.answer
-
     # loop until user runs out of guesses or user guesses the correct answer
     while current_board.round < 13 && !current_board.win
       puts "Round: #{current_board.round}"
