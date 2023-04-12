@@ -182,10 +182,8 @@ to guess the secret code"
       puts "The computer's guess is #{computer_guess}."
       current_board.round += 1
       clue = current_board.create_computer_clue(computer_guess, secret_code)
-      puts "The computer's clue is: #{clue}"
       # check if computer's guess is correct
       current_computer.narrow_solutions(clue, computer_guess)
-      puts current_computer.solutions.length
       current_board.check_for_win(game_mode)
       sleep 2
     end
@@ -209,7 +207,7 @@ Good luck!"
       puts "Your guess is: #{user_guess}"
       clue = current_board.create_clue
       puts "Your clue is: #{clue}"
-      current_board.check_for_win
+      current_board.check_for_win(game_mode)
     end
     # display lose text if user didn't win
     if current_board.win == false then puts "You lost! The correct answer was: #{current_board.answer}" end
