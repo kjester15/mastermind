@@ -126,25 +126,27 @@ class Computer
   end
 
   def narrow_solutions(clue, guess)
-    @solutions.select! do |elem|
-      if clue.include?('x')
-        index = clue.find_index('x')
-        number = guess[index]
-        next if elem.include?(number)
+    if clue.include?('x')
+      index = clue.find_index('x')
+      number = guess[index]
+      @solutions.delete_if { |elem| elem.include?(number)}
+    end
 
-      end
-      if clue.include?('o')
-        index = clue.find_index('o')
-        number = guess[index]
-        next if elem[index] == number
+    if clue.include?('o')
+      index = clue.find_index('o')
+      number = guess[index]
+      @solutions.delete_if { |elem| elem[index] == number}
+    end
 
-      end
-      true
+    if clue.include?('@')
+      index = clue.find_index('@')
+      number = guess[index]
+      @solutions.delete_if { |elem| elem[index] != number}
     end
   end
 
   def guess_code(round)
-    @guess = round == 1 ? '1122' : @solutions[rand(0..@solutions.length)]
+    @guess = round == 1 ? '1122' : @solutions[0]
     @guess
   end
 end
