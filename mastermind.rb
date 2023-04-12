@@ -121,26 +121,31 @@ class Computer
     end
   end
 
-  def narrow_solutions(clue)
-    # x if not in answer at all
-    # o if in answer but not right spot
-    # @ if correct answer
-    @solutions.select! do
+  def narrow_solutions(clue, guess)
+    # @solutions.select! do |elem|
       4.times do |i|
-        # if guess[x] is @ in clue[x] then eliminate any solutions that dont have that number in that spot
-        clue[i] == 'x' ? false : true
+        if clue[i] == 'x'
+          number = guess[i]
+          yeet = number.class
+          puts yeet
+          # next if elem.include?(number)
 
-        # if guess[x] is o in clue[x] then eliminate any solutions that dont contain that number
-        # if guess[x] is x in clue[x] then eliminate any solutions that contain that number
+        end
+        true
+        # need to see where in clue has an x, then find the number it corresponds with in guess, then remove element that contains that number
       end
-    end
+    # end
   end
 
-  def guess_code
-    @guess = ''
-    4.times do
-      number = rand(1..6).to_s
-      @guess += number
+  def guess_code(round)
+    if round == 1
+      @guess = ''
+      4.times do
+        number = rand(1..6).to_s
+        @guess += number
+      end
+    else
+      @guess = @solutions[0]
     end
     @guess
   end
@@ -164,34 +169,35 @@ to guess the secret code"
     current_board = Board.new
     current_computer = Computer.new
     current_player = Player.new
+
     # run initial instance methods
     current_computer.populate_solutions
     secret_code = current_player.create_code
-
     puts "The code you created is #{secret_code}."
 
     # begin game loop
     while current_board.round < 13 && !current_board.win
       puts "Round: #{current_board.round}"
-      computer_guess = current_computer.guess_code
+      computer_guess = current_computer.guess_code(current_board.round)
       puts "The computer's guess is #{computer_guess}."
       current_board.round += 1
       clue = current_board.create_computer_clue(computer_guess, secret_code)
       puts "The computer's clue is: #{clue}"
-      sleep 2
-
       # check if computer's guess is correct
-      current_computer.narrow_solutions(clue)
+      current_computer.narrow_solutions(clue, computer_guess)
       puts current_computer.solutions.length
+      sleep 2
     end
   elsif game_mode == 'B' # guess code mode
     # create new board
     current_board = Board.new
+
     # explain rules
     puts "You have 12 rounds to figure out what the 4 symbol code is. An 'x' indicates your guess \
 is not in the answer at all, an 'o' indicates your guess is in the answer but wasn't in the correct spot, \
 and an '@' indicates you've guessed the correct symbol in the correct spot. Your available options are: 1 2 3 4 5 & 6. \
 Good luck!"
+
     # error check - print answer (DELETE)
     p current_board.answer
 
