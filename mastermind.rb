@@ -152,10 +152,10 @@ class Computer
 end
 
 while
-  game_mode = ''
   puts "Welcome to 'Mastermind'! Would you like to create a secret code for the computer to guess, \
 or guess the computer's secret code? Type 'A' for create or 'B' for guess"
   # ask user if they want to create secret code or guess
+  game_mode = ''
   until game_mode == "A" || game_mode == "B"
     game_mode = gets.chomp.upcase
     break if game_mode == "A" || game_mode == "B"
