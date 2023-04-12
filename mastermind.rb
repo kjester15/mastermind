@@ -57,15 +57,19 @@ class Board
     @clue
   end
 
-  def check_for_win
+  def check_for_win(mode)
     # checks if clue array only contains "@"
     return unless @clue.include?('@')
     return unless @clue.uniq.count <= 1
 
-    puts 'You win!'
+    case mode
+    when 'A'
+      puts 'The computer solved your code!'
+    when 'B'
+      puts 'You win!'
+    end
     @win = true
   end
-
 end
 
 # the Player class represents the player who creates the code in create mode
@@ -129,14 +133,13 @@ class Computer
         next if elem.include?(number)
 
       end
-      true
-      # 4.times do |i|
-      #   if clue[i] == 'x'
-      #     number = guess[i]
-      #     next if elem.include?(number)
+      if clue.include?('o')
+        index = clue.find_index('o')
+        number = guess[index]
+        next if elem[index] == number
 
-      #   end
-      # end
+      end
+      true
     end
   end
 
@@ -181,6 +184,7 @@ to guess the secret code"
       # check if computer's guess is correct
       current_computer.narrow_solutions(clue, computer_guess)
       puts current_computer.solutions.length
+      current_board.check_for_win(game_mode)
       sleep 2
     end
   elsif game_mode == 'B' # guess code mode
